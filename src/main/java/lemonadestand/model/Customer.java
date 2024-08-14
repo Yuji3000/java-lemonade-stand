@@ -2,32 +2,34 @@ package lemonadestand.model;
 
 import java.util.Objects;
 
-public class Customer extends Person {
+public class Customer implements Person {
 	
-	private String name;
 	private String phoneNumber;
+	private String name;
 	
 	public Customer(String name, String phoneNumber) {
-		super(name);
+		this.name = name;
 		this.phoneNumber = phoneNumber;
 	}
 
 	
-	public String getName() {
-		return super.getName();
-	}
-
 
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
 	
+	public String getName() {
+		return name;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(super.getName(), phoneNumber);
+		return Objects.hash(getName(), phoneNumber);
 	}
+
+
+
 
 
 	@Override
@@ -39,13 +41,13 @@ public class Customer extends Person {
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
-		return Objects.equals(name, other.super.getName() && Objects.equals(phoneNumber, other.phoneNumber);
+		return Objects.equals(name, other.name) && Objects.equals(phoneNumber, other.phoneNumber);
 	}
 
 
 	@Override
 	public String toString() {
-		return "Customer [name=" + super.getName() + ", phoneNumber=" + phoneNumber + "]";
+		return "Customer [name=" + getName() + ", phoneNumber=" + phoneNumber + "]";
 	}
 
 }

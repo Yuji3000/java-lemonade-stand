@@ -59,6 +59,12 @@ public class Order {
 		return result;
 	}
 
+//	Order other = (Order) obj;
+//	This is an instance of casting(down casting). Being treated like its actual class
+//	Object obj - instance of up casting, being treated like this parent class
+	
+	
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

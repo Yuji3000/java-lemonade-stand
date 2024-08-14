@@ -1,5 +1,9 @@
 package lemonadestand.model;
 
-public class Person {
-
+public interface Person {
+	
+	default String getName() {
+		return "John Doe";
+	}
+	
 }
