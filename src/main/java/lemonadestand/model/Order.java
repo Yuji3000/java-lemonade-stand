@@ -1,13 +1,14 @@
 package lemonadestand.model;
 
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Order {
 
 	private Customer customer;
 	
-	private Lemonade[] lemonades;
+	private Set<Lemonade> lemonades;
 	
 	private double total;
 	// default value is 0.0
@@ -15,15 +16,30 @@ public class Order {
 	public Order(Customer customer) {
 		super();
 		this.customer = customer;
-		lemonades = new Lemonade[0];
+		lemonades = new HashSet<>();
 		total = 0.0;
+	}
+	
+	public void addLemonade(Lemonade lemonade) {
+		if (lemonades.add(lemonade)) {
+			total += lemonade.getPrice();			
+		}
+	}
+	
+	
+	public void addLemonades(Set<Lemonade> lemonades) {
+		this.lemonades.addAll(lemonades);
+		for (Lemonade l : lemonades ) {
+			total += l.getPrice();
+		}
 	}
 	
 	public Customer getCustomer() {
 		return customer;
 	}
 
-	public Lemonade[] getLemonades() {
+	public Set<Lemonade> getLemonades() {
+//		return lemonades.toArray(new Lemonade[lemonades.size()]);
 		return lemonades;
 	}
 
@@ -32,29 +48,11 @@ public class Order {
 	}
 
 
-	
-	public void addLemonade(Lemonade lemonade) {
-// with for loop
-//		Lemonade[] temp = new Lemonade[lemonades.length + 1];
-//		
-//		for (int i = 0; i< lemonades.length; i++) {
-//			temp[i] = lemonades[i];
-//		}
-//		temp[temp.length - 1] = lemonade;
-//		lemonades = temp;
-		
-		
-		Lemonade[] newLemonadeArray = Arrays.copyOf(lemonades, lemonades.length + 1);
-		newLemonadeArray[newLemonadeArray.length - 1] = lemonade;
-		lemonades = newLemonadeArray;
-		total += lemonade.getPrice();
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Arrays.hashCode(lemonades);
+		result = prime * result +lemonades.hashCode();
 		result = prime * result + Objects.hash(customer, total);
 		return result;
 	}
@@ -66,23 +64,23 @@ public class Order {
 	
 	
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Order other = (Order) obj;
-		return Objects.equals(customer, other.customer) && Arrays.equals(lemonades, other.lemonades)
-				&& Double.doubleToLongBits(total) == Double.doubleToLongBits(other.total);
-	}
+	   public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Order other = (Order) obj;
+        return Objects.equals(customer, other.customer)
+                && Objects.equals(lemonades, other.lemonades)
+                && Double.doubleToLongBits(total) == Double.doubleToLongBits(other.total);
+    }
 
-	@Override
-	public String toString() {
-		return "Order [customer=" + customer + ", lemonades=" + Arrays.toString(lemonades) + ", total=" + total + "]";
-	}
-	
+	    @Override
+	    public String toString() {
+	        return "Order [customer=" + customer + ", lemonades=" + lemonades + ", total=" + total + "]";
+	    }
 
 	
 }
